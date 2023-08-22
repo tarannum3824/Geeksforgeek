@@ -1,0 +1,27 @@
+class Solution {
+    public static int findMinOperation(int N, int[][] matrix) {
+        int[] rowSums = new int[N];
+        int[] colSums = new int[N];
+
+        // Calculate row sums and column sums
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                rowSums[i] += matrix[i][j]; // Sum of each row
+                colSums[j] += matrix[i][j]; // Sum of each column
+            }
+        }
+
+        int maxSum = 0;
+        for (int i = 0; i < N; i++) {
+            maxSum = Math.max(maxSum, Math.max(rowSums[i], colSums[i])); // Find the maximum sum among rows and columns
+        }
+
+        int totalOperations = 0;
+        for (int i = 0; i < N; i++) {
+            totalOperations += Math.abs(maxSum - rowSums[i]); // Calculate operations needed for each row
+            totalOperations += Math.abs(maxSum - colSums[i]); // Calculate operations needed for each column
+        }
+
+        return totalOperations / 2; // Each operation counts twice (row and column)
+    }
+}
